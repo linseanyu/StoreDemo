@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import { PrismaClient } from "@prisma/client"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
+import GitHubProvider from "next-auth/providers/github"
 import { compare } from "bcryptjs"
 
 const prisma = new PrismaClient()
@@ -13,6 +15,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
@@ -53,11 +63,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google" || account?.provider === "github") {
+        // Handle OAuth sign-in
+        if (!user.email) return false
+        
+        // Check if user exists in database
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email }
+        })
+
+        if (!existingUser) {
+          // Create new user for OAuth
+          await prisma.user.create({
+            data: {
+              email: user.email,
+              name: user.name || user.email,
+              image: user.image,
+              role: "USER",
+            }
+          })
+        }
+      }
+      return true
+    },
+    async jwt({ token, user, account }) {
       if (user) {
-        return {
-          ...token,
-          role: (user as any).role,
+        // For OAuth users, get role from database
+        if (account?.provider === "google" || account?.provider === "github") {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: user.email! }
+          })
+          token.role = dbUser?.role || "USER"
+        } else {
+          // For credentials users, role is already in user object
+          token.role = (user as any).role
         }
       }
       return token

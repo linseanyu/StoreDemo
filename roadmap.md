@@ -41,6 +41,7 @@ Let's move on to Auth, use this document to implement it
 (along with the content copied from the auth.js site)
 ```
 as we're gonna use JWT, so ignore prisma-adapter if it's shown(simply just reply 'no need to use this package)
+**The AI didn't finish all the steps under "Implement NextAuth.js authentication:", have to check everything is done before moving on the next step, especially the "Protected routes"**
 
 9. After this, it will generate an AUTH_SECRET, which likely will be in .env.local file, move it to .env file and then delete the .env.local file. **This key is also important for vercel deployment, go to vercel project page->setting->Enviroment Variables, and add the Auth_SECRET key and its value there**
 

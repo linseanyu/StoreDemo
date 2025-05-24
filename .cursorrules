@@ -51,7 +51,7 @@
   - NextAuth.js beta for authentication
   - Stripe for payments
 
-### 2. Database and Authentication [ ]
+### 2. Database and Authentication [X]
 
 - [x] Set up PostgreSQL database
 - [x] Configure Prisma schema:
