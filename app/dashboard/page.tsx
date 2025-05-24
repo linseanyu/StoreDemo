@@ -29,7 +29,7 @@ export default async function DashboardPage() {
             
             <div>
               <label className="block text-sm font-medium text-gray-700">Role</label>
-              <p className="mt-1 text-sm text-gray-900">{(session.user as any)?.role || 'USER'}</p>
+              <p className="mt-1 text-sm text-gray-900">{(session.user as { role?: string })?.role || 'USER'}</p>
             </div>
             
             <div>

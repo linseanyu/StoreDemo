@@ -5,6 +5,8 @@ import { z } from 'zod'
 
 const prisma = new PrismaClient()
 
+export const runtime = 'nodejs'
+
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
@@ -45,7 +47,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Remove password from response
-    const { password: _, ...userWithoutPassword } = user
+    const { password: _password, ...userWithoutPassword } = user
 
     return NextResponse.json(
       { 

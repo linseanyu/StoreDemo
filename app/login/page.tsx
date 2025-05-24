@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -35,7 +35,7 @@ export default function LoginPage() {
         router.push('/')
         router.refresh()
       }
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -46,7 +46,7 @@ export default function LoginPage() {
     setIsLoading(true)
     try {
       await signIn(provider, { callbackUrl: '/' })
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.')
       setIsLoading(false)
     }
@@ -134,7 +134,7 @@ export default function LoginPage() {
           </form>
 
           <div className="text-center text-sm">
-            <span className="text-muted-foreground">Don't have an account? </span>
+            <span className="text-muted-foreground">Don&apos;t have an account? </span>
             <Link href="/register" className="text-primary hover:underline">
               Sign up
             </Link>

@@ -7,6 +7,8 @@ import { compare } from "bcryptjs"
 
 const prisma = new PrismaClient()
 
+export const runtime = 'nodejs'
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt"
@@ -97,7 +99,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.role = dbUser?.role || "USER"
         } else {
           // For credentials users, role is already in user object
-          token.role = (user as any).role
+          token.role = (user as { role?: string })?.role
         }
       }
       return token
@@ -107,7 +109,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         ...session,
         user: {
           ...session.user,
-          role: (token as any).role,
+          role: (token as { role?: string })?.role,
         }
       }
     }

@@ -61,7 +61,7 @@ export default function RegisterPage() {
       } else {
         setError(data.message || 'Something went wrong')
       }
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -72,7 +72,7 @@ export default function RegisterPage() {
     setIsLoading(true)
     try {
       await signIn(provider, { callbackUrl: '/' })
-    } catch (error) {
+    } catch {
       setError('Something went wrong. Please try again.')
       setIsLoading(false)
     }
