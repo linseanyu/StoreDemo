@@ -34,3 +34,24 @@ Start from this step
 Seed sample categories, products and users. For category and product images, use the images inside public/images folder. We have three categories. T-shirt, jeans and shoes and two products inside each category
 ```
 after it's successfully executed, go to Neon and check if the data is inserted. If so, database is ready, milestone
+
+8. Setup the Auth. Go to Auth.js site, copy all the text in the Auth installation (for Next.js) session, and paste it on the chat panel to prompt the setup
+```
+Let's move on to Auth, use this document to implement it
+(along with the content copied from the auth.js site)
+```
+as we're gonna use JWT, so ignore prisma-adapter if it's shown(simply just reply 'no need to use this package)
+
+9. After this, it will generate an AUTH_SECRET, which likely will be in .env.local file, move it to .env file and then delete the .env.local file. **This key is also important for vercel deployment, go to vercel project page->setting->Enviroment Variables, and add the Auth_SECRET key and its value there**
+
+10. check the auth.ts file and see if there is any error. If so, ask the chat to fix it
+
+11. auth is done, mark it as done and move on
+```
+- [ ] Implement NextAuth.js authentication:
+  - Email/Password
+  - OAuth providers (Google, GitHub)
+  - JWT handling
+  - Protected routes
+Mark this step as done and go for next step
+```
