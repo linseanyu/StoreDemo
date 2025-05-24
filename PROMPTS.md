@@ -32,6 +32,10 @@ Start from this step
   - Cart model
 
 ## Prompt 4
+Seed sample categories, products and users. For category and product images, use the images inside public/images folder. We have three categories. T-shirt, jeans and shoes and two products inside each category
+
+
+## Prompt 
 
 - [ ] Implement NextAuth.js authentication:
   - Email/Password
@@ -39,6 +43,6 @@ Start from this step
   - JWT handling
   - Protected routes
 
-## Prompt 5
+## Prompt
 
 Implement core features start from home layout.

@@ -29,4 +29,8 @@ Start from this step
   - Cart model
 ```
 
-7. go to the vercel to check if the table are created. If so, database is ready, milestone checked.
+7. Seed (insert some test data) some data into the database with the following prompt
+```
+Seed sample categories, products and users. For category and product images, use the images inside public/images folder. We have three categories. T-shirt, jeans and shoes and two products inside each category
+```
+after it's successfully executed, go to Neon and check if the data is inserted. If so, database is ready, milestone
