@@ -63,4 +63,15 @@ Let's now implement the Core Features starting from Home Layout. Only implement 
 ```
 note that we are using Router Groups(A route feature from NextJs framework), we should prompt AI to delete conflict route
 
-13
+13.
+```
+continue to implement 
+- [ ] Homepage:
+  - banner carousel
+  - latest products
+in the Core Features
+
+use the the pictures whose name starts with banner under the public/images folder to be the carousel pictures
+
+the indicator of the carousel has bug, please check it for me
+```

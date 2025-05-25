@@ -11,6 +11,7 @@
 - Update Scratchpad after completing subtasks.
 - Reflect and plan after milestones for better task management.
 - Always refer to Scratchpad before planning the next step.
+- strictly follow the instructions in the Scratchpad, don't add any extra features or changes that are not mentioned in the Scratchpad.
 
 ## Lessons
 
@@ -73,7 +74,7 @@
   - Create `(home)` folder in `app` directory
   - Header with logo, search bar, and navigation
   - Footer with links and social media
-- [ ] Homepage:
+- [x] Homepage:
   - banner carousel
   - latest products
 - [ ] Products Catalog:
