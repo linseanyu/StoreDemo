@@ -56,3 +56,11 @@ as we're gonna use JWT, so ignore prisma-adapter if it's shown(simply just reply
   - Protected routes
 Mark this step as done and go for next step
 ```
+
+12. implement the Home Layout with the following prompt
+```
+Let's now implement the Core Features starting from Home Layout. Only implement what's written on the list, don't add any extra feature. We're using Router Groups, so if there's any conflict route, delete the related file 
+```
+note that we are using Router Groups(A route feature from NextJs framework), we should prompt AI to delete conflict route
+
+13
