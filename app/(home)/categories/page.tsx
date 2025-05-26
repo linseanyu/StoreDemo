@@ -7,7 +7,7 @@ export default function CategoriesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Categories</h1>
-        <p className="text-gray-600">Browse products by category to find exactly what you're looking for</p>
+        <p className="text-gray-600">Browse products by category to find exactly what you&apos;re looking for</p>
       </div>
       
       <Suspense fallback={<CategoriesGridSkeleton />}>
