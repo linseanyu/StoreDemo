@@ -4,10 +4,17 @@ import { ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useCartStore } from '@/lib/stores/cart-store'
+import { useEffect, useState } from 'react'
 
 export function CartButton() {
   const { getTotalItems, openCart } = useCartStore()
-  const totalItems = getTotalItems()
+  const [isHydrated, setIsHydrated] = useState(false)
+  
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+  
+  const totalItems = isHydrated ? getTotalItems() : 0
 
   return (
     <Button
