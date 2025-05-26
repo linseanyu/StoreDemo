@@ -77,6 +77,13 @@ the indicator of the carousel has bug, please check it for me
 ```
 
 14.
+Continue with the product catagories
 ```
-
+please contiune building
+- [ ] Products Catalog:
+  - Sidebar with categories and filters
+  - Search results
+  - Product grid
+  - Pagination
+in Core Features
 ```

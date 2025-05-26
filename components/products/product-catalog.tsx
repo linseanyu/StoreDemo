@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { ProductFilters } from './product-filters'
 import { ProductGrid } from './product-grid'
 import { ProductPagination } from './product-pagination'
@@ -44,6 +45,7 @@ interface Filters {
 }
 
 export function ProductCatalog() {
+  const searchParams = useSearchParams()
   const [products, setProducts] = useState<Product[]>([])
   const [pagination, setPagination] = useState<PaginationInfo | null>(null)
   const [loading, setLoading] = useState(true)
@@ -58,6 +60,20 @@ export function ProductCatalog() {
     sortOrder: 'desc'
   })
   const [currentPage, setCurrentPage] = useState(1)
+
+  // Initialize filters from URL parameters
+  useEffect(() => {
+    const categoryId = searchParams.get('categoryId') || ''
+    const search = searchParams.get('search') || ''
+    
+    if (categoryId || search) {
+      setFilters(prev => ({
+        ...prev,
+        categoryId,
+        search
+      }))
+    }
+  }, [searchParams])
 
   const fetchProducts = useCallback(async (page: number = 1) => {
     setLoading(true)
