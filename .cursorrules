@@ -86,7 +86,7 @@
   - Categories grid with product counts
   - Category cards with navigation to filtered products
   - Loading states and error handling
-- [ ] Product pages: [COMPLETED]
+- [x] Product pages: [COMPLETED]
   - [x] Create product detail page layout with dynamic routing
   - [x] Implement image gallery with thumbnails and zoom
   - [x] Add product information section:
@@ -102,10 +102,16 @@
     - [x] Show products from same category
     - [x] Product card carousel with navigation
     - [x] Exclude current product from suggestions
-- [ ] Shopping cart:
-  - Add/remove items
-  - Update quantities
-  - Cart persistence
+- [x] Shopping cart: [COMPLETED]
+  - [x] Create cart state management with Zustand
+  - [x] Implement add/remove items functionality
+  - [x] Add quantity update controls
+  - [x] Create cart persistence with localStorage
+  - [x] Build cart sidebar/drawer component
+  - [x] Add cart page with full functionality
+  - [x] Integrate cart with product pages
+  - [x] Add cart item count in header
+  - [x] Implement cart total calculations
 - [ ] Checkout process:
   - Shipping information
   - Payment integration (Stripe)

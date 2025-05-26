@@ -1,1 +1,3 @@
- 
+# This is a placeholder file reference
+# In a real application, you would place an actual placeholder image here
+# For now, the ProductImageGallery component uses a data URI fallback 

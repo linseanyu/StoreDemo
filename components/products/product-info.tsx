@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Star, ShoppingCart, Plus, Minus, Heart } from 'lucide-react'
+import { Star, ShoppingCart, Plus, Minus, Heart, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { useCartStore } from '@/lib/stores/cart-store'
+import { toast } from 'sonner'
 
 interface Product {
   id: string
@@ -17,6 +19,7 @@ interface Product {
   }
   avgRating: number
   reviewCount: number
+  images: string[]
 }
 
 interface ProductInfoProps {
@@ -48,6 +51,10 @@ const renderStars = (rating: number) => {
 export function ProductInfo({ product }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
+  
+  const { addItem, openCart, isItemInCart, getItemQuantity } = useCartStore()
+  const itemInCart = isItemInCart(product.id)
+  const cartQuantity = getItemQuantity(product.id)
 
   const handleQuantityChange = (change: number) => {
     const newQuantity = quantity + change
@@ -59,15 +66,29 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const handleAddToCart = async () => {
     setIsAddingToCart(true)
     try {
-      // TODO: Implement add to cart functionality
-      console.log('Adding to cart:', { productId: product.id, quantity })
+      const cartItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0] || '/placeholder-product.jpg',
+        stock: product.stock,
+        category: product.category
+      }
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      addItem(cartItem, quantity)
       
-      // TODO: Show success message or update cart state
+      toast.success(`Added ${quantity} ${quantity === 1 ? 'item' : 'items'} to cart`, {
+        action: {
+          label: 'View Cart',
+          onClick: () => openCart()
+        }
+      })
+      
+      // Reset quantity to 1 after adding
+      setQuantity(1)
     } catch (error) {
       console.error('Error adding to cart:', error)
+      toast.error('Failed to add item to cart')
     } finally {
       setIsAddingToCart(false)
     }
@@ -75,6 +96,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
   const isOutOfStock = product.stock === 0
   const isLowStock = product.stock > 0 && product.stock <= 5
+  const maxQuantity = Math.max(0, product.stock - cartQuantity)
 
   return (
     <div className="space-y-6">
@@ -119,6 +141,14 @@ export function ProductInfo({ product }: ProductInfoProps) {
             In Stock ({product.stock} available)
           </Badge>
         )}
+        
+        {/* Cart Status */}
+        {itemInCart && (
+          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+            <Check className="w-3 h-3 mr-1" />
+            {cartQuantity} in cart
+          </Badge>
+        )}
       </div>
 
       <Separator />
@@ -134,7 +164,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       <Separator />
 
       {/* Quantity and Add to Cart */}
-      {!isOutOfStock && (
+      {!isOutOfStock && maxQuantity > 0 && (
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -154,17 +184,22 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 variant="outline"
                 size="icon"
                 onClick={() => handleQuantityChange(1)}
-                disabled={quantity >= product.stock}
+                disabled={quantity >= maxQuantity}
               >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
+            {maxQuantity < product.stock && (
+              <p className="text-sm text-amber-600 mt-1">
+                {cartQuantity} already in cart. {maxQuantity} more available.
+              </p>
+            )}
           </div>
 
           <div className="flex gap-3">
             <Button
               onClick={handleAddToCart}
-              disabled={isAddingToCart}
+              disabled={isAddingToCart || quantity > maxQuantity}
               className="flex-1"
               size="lg"
             >
@@ -176,6 +211,21 @@ export function ProductInfo({ product }: ProductInfoProps) {
               <Heart className="w-5 h-5" />
             </Button>
           </div>
+        </div>
+      )}
+
+      {/* Out of Stock or Max Quantity Reached */}
+      {(isOutOfStock || maxQuantity === 0) && (
+        <div className="space-y-4">
+          <Button disabled className="w-full" size="lg">
+            <ShoppingCart className="w-5 h-5 mr-2" />
+            {isOutOfStock ? 'Out of Stock' : 'Maximum Quantity in Cart'}
+          </Button>
+          {maxQuantity === 0 && !isOutOfStock && (
+            <p className="text-sm text-gray-600 text-center">
+              You have the maximum available quantity ({cartQuantity}) in your cart.
+            </p>
+          )}
         </div>
       )}
 
